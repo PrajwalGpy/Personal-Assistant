@@ -1,0 +1,291 @@
+{
+  "name": "contact Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "fbc80acd-6d1e-41c9-b3f8-219af63693f2",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-nano",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-nano"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        140,
+        220
+      ],
+      "id": "37a2c002-2758-4a7d-9087-82a635e62800",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "aOQ789JMdzc8ZCsb",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2ca5f7ff-a614-4f35-9fd2-dd5a8f79d183",
+              "name": "output",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        580,
+        0
+      ],
+      "id": "02a2aac8-1352-4e7a-b64a-25eb9aba1ea5",
+      "name": "Success"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        740,
+        0
+      ],
+      "id": "f8864b38-a84c-431d-8946-6bc320b6a4d5",
+      "name": "Error"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1vZz_8FD8hvF-i6DeVK6cUh4XpDeVJF-MWl9xQ2QzXrU",
+          "mode": "list",
+          "cachedResultName": "Contact DB",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vZz_8FD8hvF-i6DeVK6cUh4XpDeVJF-MWl9xQ2QzXrU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vZz_8FD8hvF-i6DeVK6cUh4XpDeVJF-MWl9xQ2QzXrU/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Email": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Email__using_to_match_', ``, 'string') }}",
+            "Name": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Name', ``, 'string') }}",
+            "Phone Number": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Phone_Number', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "Email"
+          ],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Phone Number",
+              "displayName": "Phone Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.6,
+      "position": [
+        320,
+        220
+      ],
+      "id": "0e02c6ba-fe3b-4731-82e5-0617b391237c",
+      "name": "Add or Update Contact",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "J9Pg8Fda1JJgxAEX",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1vZz_8FD8hvF-i6DeVK6cUh4XpDeVJF-MWl9xQ2QzXrU",
+          "mode": "list",
+          "cachedResultName": "Contact DB",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vZz_8FD8hvF-i6DeVK6cUh4XpDeVJF-MWl9xQ2QzXrU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1vZz_8FD8hvF-i6DeVK6cUh4XpDeVJF-MWl9xQ2QzXrU/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.6,
+      "position": [
+        480,
+        220
+      ],
+      "id": "d455760f-9083-46a3-8150-920010dfa8d3",
+      "name": "Get Contacts",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "J9Pg8Fda1JJgxAEX",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.query }}",
+        "options": {
+          "systemMessage": "Your Job:\n\nFind contact details\n\nAdd new contacts\n\nUpdate existing contacts\n\nTools:\n\nGet Contacts - Use to find contact information\n\nAdd or Update Contact - Use to:\n\nSave new contacts\n\nChange existing contact details\n\nHow to Work:\n\nWhen asked to find someone: Use Get Contacts\n\nWhen asked to add/update: Use Add or Update Contact\n\nExample:\nUser says: \"Add John Doe's new phone number\"\nYou: Use Add or Update Contact with:\n\nName: John Doe\n\nNew phone number: [number]\n\nKeep it simple:\n\nFind contacts → Get Contacts\n\nSave changes → Add or Update Contact\n\nNo extra steps - just do what's needed!"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "b16b9f57-0ddf-48b4-95cc-133043378b54",
+      "name": "Contact Agent",
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "query": "Sophia Garcia"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Contact Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Contact Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add or Update Contact": {
+      "ai_tool": [
+        [
+          {
+            "node": "Contact Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Contacts": {
+      "ai_tool": [
+        [
+          {
+            "node": "Contact Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Contact Agent": {
+      "main": [
+        [
+          {
+            "node": "Success",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "32dd8d0e-3896-45ee-abf6-2d783fdd73f6",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1a919a52904068411d81843202683e3086af5a7b099ce8f1ccc4d5ea5a19763c"
+  },
+  "id": "2ORvM4UeNyZACCMF",
+  "tags": []
+}

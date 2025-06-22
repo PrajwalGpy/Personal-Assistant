@@ -1,0 +1,370 @@
+{
+  "name": "email Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -800,
+        80
+      ],
+      "id": "3a1d3198-0d28-414c-87a7-607e9a7bce01",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d43c0030-a8a2-4971-9b2f-1820dfd14635",
+              "name": "output",
+              "value": "=Sucess{{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {
+          "ignoreConversionErrors": false
+        }
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -100,
+        80
+      ],
+      "id": "34849606-6276-4b65-a11c-67776310228d",
+      "name": "Success"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        -680,
+        400
+      ],
+      "id": "1b3bec5e-482e-4e0d-8529-0e2295e8287c",
+      "name": "send email",
+      "webhookId": "b8ea2ec8-c056-4331-ac49-169f47aca67a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "UN9sCODFAklzEeGq",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "markAsUnread",
+        "messageId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message_ID', ``, 'string') }}"
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        -380,
+        500
+      ],
+      "id": "4d1faad6-0666-4745-9939-18705ea9b8e2",
+      "name": "Mark As unread",
+      "webhookId": "b8ea2ec8-c056-4331-ac49-169f47aca67a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "UN9sCODFAklzEeGq",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "emailType": "html",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        -220,
+        480
+      ],
+      "id": "3a255ec6-6846-47d8-8c21-6ad6a4449002",
+      "name": "create draft",
+      "webhookId": "b8ea2ec8-c056-4331-ac49-169f47aca67a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "UN9sCODFAklzEeGq",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "label",
+        "returnAll": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_All', ``, 'boolean') }}"
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        -80,
+        460
+      ],
+      "id": "3b97c6fb-2929-4794-82e7-4eca215b2bd4",
+      "name": "get label",
+      "webhookId": "b8ea2ec8-c056-4331-ac49-169f47aca67a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "UN9sCODFAklzEeGq",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "limit": 5,
+        "simple": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Simplify', ``, 'boolean') }}",
+        "filters": {
+          "includeSpamTrash": false,
+          "readStatus": "both",
+          "sender": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Sender', ``, 'string') }}"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        -520,
+        460
+      ],
+      "id": "714a8960-a532-43d2-bbf4-01a870ae707b",
+      "name": "Get Emails",
+      "webhookId": "b8ea2ec8-c056-4331-ac49-169f47aca67a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "UN9sCODFAklzEeGq",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "reply",
+        "messageId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message_ID', ``, 'string') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        60,
+        400
+      ],
+      "id": "f12d8a31-3380-4756-b306-366f984c41ed",
+      "name": "Email Reply",
+      "webhookId": "b8ea2ec8-c056-4331-ac49-169f47aca67a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "UN9sCODFAklzEeGq",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -820,
+        320
+      ],
+      "id": "77d2638c-ef5d-4281-86f1-c53c093ec616",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "aOQ789JMdzc8ZCsb",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        80,
+        80
+      ],
+      "id": "c4e5a60a-cd76-4b23-bd66-76a612fdba2c",
+      "name": "Error"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.query }}",
+        "options": {
+          "systemMessage": "**Email Assistant - Simple Guide**  \n\n**Your Job:** Handle emails professionally. Always:  \n- Write emails in HTML format  \n- Sign off as \"Prajwal\"  \n\n---\n\n**Tools You Have:**  \n1. **Send Email** - For sending completed emails  \n2. **Create Draft** - When user wants to save as draft  \n3. **Get Emails** - Must use first to find emails before other actions  \n4. **Get Labels** - Must use before labeling emails  \n5. **Mark Unread** - For flagging emails (need message ID from Get Emails)  \n6. **Label Email** - For tagging emails (need message ID + label ID)  \n7. **Email Reply** - For replying (need message ID from Get Emails)  \n\n---\n\n**Important Rules:**  \n- Always use **Get Emails** first before:  \n  - Replying  \n  - Marking unread  \n  - Adding labels  \n- For labels, also use **Get Labels** to get the label ID  \n\n**Current Date/Time:** [Auto-filled when used]  \n\n**Example Workflow:**  \nUser says: \"Reply to Sarah's last email with 'Thanks!'\"  \nYou:  \n1. Use **Get Emails** to find Sarah's message  \n2. Use **Email Reply** with the message ID  \n\n**Email Signature:**  \nBest regards,  \nPrajwal \nif you  need  eamil address ask unlimate assetent to search it and give to you\n\n**Remember:** Fast, accurate, professional. Always follow these steps."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -540,
+        80
+      ],
+      "id": "f2624a66-59fa-4a6d-b7f1-e8526654599d",
+      "name": "Email Agent",
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "query": "Summarize the top 5 unread emails and send the summary to Sophia Garcia. If you need anything else, just let me know!"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Email Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "send email": {
+      "ai_tool": [
+        [
+          {
+            "node": "Email Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark As unread": {
+      "ai_tool": [
+        [
+          {
+            "node": "Email Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "create draft": {
+      "ai_tool": [
+        [
+          {
+            "node": "Email Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get label": {
+      "ai_tool": [
+        [
+          {
+            "node": "Email Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Emails": {
+      "ai_tool": [
+        [
+          {
+            "node": "Email Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Reply": {
+      "ai_tool": [
+        [
+          {
+            "node": "Email Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Email Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Agent": {
+      "main": [
+        [
+          {
+            "node": "Success",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "03e00c86-1755-4ff0-8ff3-3a8f2d0cbf00",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1a919a52904068411d81843202683e3086af5a7b099ce8f1ccc4d5ea5a19763c"
+  },
+  "id": "tfOtZBk7E83un4B3",
+  "tags": []
+}
