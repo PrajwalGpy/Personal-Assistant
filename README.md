@@ -2,8 +2,8 @@
 
 A revolutionary AI-powered personal assistant system that delegates tasks to specialized AI agents, functioning like a team of virtual assistants working 24/7. Built with n8n's no-code platform for seamless automation.
 
-![Demo Screenshot Placeholder]()
-*System Architecture Demo*
+![Demo Screenshot Placeholder](https://github.com/PrajwalGpy/Personal-Assistant/blob/main/Screenshot%202025-06-21%20161832.png)
+
 
 ---
 
